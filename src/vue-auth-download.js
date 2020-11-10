@@ -217,10 +217,13 @@ function eventClick(element, binding, pluginOptions) {
         const fileNameMatch = contentDisposition.match(/filename="(.+)"/)
         if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
       }
-      link.setAttribute("download", fileName)
+
       if (options.openInNewTab) {
         link.setAttribute("target", "_blank")
+      } else {
+        link.setAttribute("download", fileName)
       }
+
       document.body.appendChild(link)
       link.click()
       link.remove()
