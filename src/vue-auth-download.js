@@ -51,6 +51,7 @@ function eventClick(element, binding, pluginOptions) {
     downloadingText: "Downloading",
     downloadingHtml: "",
     dotsAnimation: true,
+    openInNewTab: false
   }
 
   // try to get the values
@@ -99,6 +100,10 @@ function eventClick(element, binding, pluginOptions) {
     ) {
       options.additionalHeaders = pluginOptions.additionalHeaders
     }
+  }
+
+  if (typeof pluginOptions.openInNewTab === "boolean") {
+    options.openInNewTab = pluginOptions.openInNewTab
   }
 
   // Plugin text mode (text or html)
@@ -213,6 +218,9 @@ function eventClick(element, binding, pluginOptions) {
         if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
       }
       link.setAttribute("download", fileName)
+      if (options.openInNewTab) {
+        link.setAttribute("target", "_blank")
+      }
       document.body.appendChild(link)
       link.click()
       link.remove()
