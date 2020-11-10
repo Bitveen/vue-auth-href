@@ -51,7 +51,7 @@ function eventClick(element, binding, pluginOptions) {
     downloadingText: "Downloading",
     downloadingHtml: "",
     dotsAnimation: true,
-    openInNewTab: false
+    openInNewTab: false,
   }
 
   // try to get the values
