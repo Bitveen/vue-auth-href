@@ -8349,6 +8349,8 @@ function eventClick(element, binding, pluginOptions) {
     }
 
     if (options.openInNewTab) {
+      //eslint-disable-next-line
+      console.log("Open in new tab");
       link.setAttribute("target", "_blank");
     } else {
       link.setAttribute("download", fileName);
