@@ -222,9 +222,12 @@ function eventClick(element, binding, pluginOptions) {
 
       document.body.appendChild(link)
 
-      window.open(url, "_blank")
+      if (options.openInNewTab) {
+        window.open(url, "_blank")
+      } else {
+        link.click()
+      }
 
-      //link.click()
       link.remove()
 
       window.URL.revokeObjectURL(url)

@@ -8350,7 +8350,12 @@ function eventClick(element, binding, pluginOptions) {
 
     link.setAttribute("download", fileName);
     document.body.appendChild(link);
-    window.open(url, "_blank"); //link.click()
+
+    if (options.openInNewTab) {
+      window.open(url, "_blank");
+    } else {
+      link.click();
+    }
 
     link.remove();
     window.URL.revokeObjectURL(url);
