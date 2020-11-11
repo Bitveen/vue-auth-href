@@ -219,6 +219,8 @@ function eventClick(element, binding, pluginOptions) {
       }
 
       if (options.openInNewTab) {
+        // eslint-disable-next-line
+        console.log("OPEN ", url)
         window.open(url, "_blank")
       } else {
         link.setAttribute("download", fileName)
