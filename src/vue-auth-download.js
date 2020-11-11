@@ -218,14 +218,13 @@ function eventClick(element, binding, pluginOptions) {
         if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
       }
 
+      link.setAttribute("download", fileName)
+
       document.body.appendChild(link)
 
-      if (options.openInNewTab) {
-        window.open(url, "_blank")
-      } else {
-        link.click()
-      }
+      window.open(url, "_blank")
 
+      //link.click()
       link.remove()
 
       window.URL.revokeObjectURL(url)
