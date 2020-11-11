@@ -8355,13 +8355,16 @@ function eventClick(element, binding, pluginOptions) {
     if (contentDisposition) {
       var fileNameMatch = contentDisposition.match(/filename="(.+)"/);
       if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1];
-    } // eslint-disable-next-line
+    }
 
+    if (options.openInNewTab) {
+      window.open(url, "_blank");
+    } else {
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
 
-    console.log("OPEN ", url);
-    window.open(url, "_blank");
-    document.body.appendChild(link);
-    link.remove();
     window.URL.revokeObjectURL(url);
   }).catch(function (e) {
     throw e;

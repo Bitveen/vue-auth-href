@@ -217,13 +217,16 @@ function eventClick(element, binding, pluginOptions) {
         const fileNameMatch = contentDisposition.match(/filename="(.+)"/)
         if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
       }
-      // eslint-disable-next-line
-      console.log("OPEN ", url)
-      window.open(url, "_blank")
 
-      document.body.appendChild(link)
+      if (options.openInNewTab) {
+        window.open(url, "_blank")
+      } else {
+        document.body.appendChild(link)
 
-      link.remove()
+        link.click()
+        link.remove()
+      }
+
       window.URL.revokeObjectURL(url)
     })
     .catch(e => {
