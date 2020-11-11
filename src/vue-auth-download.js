@@ -218,14 +218,15 @@ function eventClick(element, binding, pluginOptions) {
         if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
       }
 
+      document.body.appendChild(link)
+
       if (options.openInNewTab) {
         window.open(url, "_blank")
       } else {
-        document.body.appendChild(link)
-
         link.click()
-        link.remove()
       }
+
+      link.remove()
 
       window.URL.revokeObjectURL(url)
     })
