@@ -218,16 +218,14 @@ function eventClick(element, binding, pluginOptions) {
         if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
       }
 
-      if (options.openInNewTab) {
-        // eslint-disable-next-line
-        console.log("OPEN ", url)
-        window.open(url, "_blank")
-      } else {
-        link.setAttribute("download", fileName)
-      }
+      link.setAttribute("download", fileName)
+
+      // eslint-disable-next-line
+      console.log("OPEN ", url)
+      window.open(url, "_blank")
 
       document.body.appendChild(link)
-      link.click()
+      // link.click()
       link.remove()
       window.URL.revokeObjectURL(url)
     })
