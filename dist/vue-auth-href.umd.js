@@ -8284,6 +8284,10 @@ function eventClick(element, binding, pluginOptions) {
     throw Error("v-auth-href: textMode must be 'text' or 'html'");
   }
 
+  if (_typeof(binding.value) === "object" && binding.value.openInNewTab && typeof binding.value.openInNewTab === "boolean") {
+    options.openInNewTab = binding.value.openInNewTab;
+  }
+
   if (options.textMode === "text") {
     // downloadingText
     if (_typeof(binding.value) === "object" && binding.value.downloadingText && binding.value.downloadingText !== "") {
@@ -8362,9 +8366,10 @@ function eventClick(element, binding, pluginOptions) {
 
     if (options.openInNewTab) {
       window.open(url, "_blank");
+    } else {
+      link.click();
     }
 
-    link.click();
     link.remove();
     window.URL.revokeObjectURL(url);
   }).catch(function (e) {
