@@ -8261,6 +8261,8 @@ function eventClick(element, binding, pluginOptions) {
   }
 
   if (typeof pluginOptions.openInNewTab === "boolean") {
+    // eslint-disable-next-line
+    console.log("SETUP option: ", pluginOptions.openInNewTab);
     options.openInNewTab = pluginOptions.openInNewTab;
   } // Plugin text mode (text or html)
 
@@ -8352,6 +8354,8 @@ function eventClick(element, binding, pluginOptions) {
     document.body.appendChild(link);
 
     if (options.openInNewTab) {
+      // eslint-disable-next-line
+      console.log("OPEN IN NEW TAB");
       window.open(url, "_blank");
     } else {
       link.click();
