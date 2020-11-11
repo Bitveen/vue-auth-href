@@ -8346,18 +8346,12 @@ function eventClick(element, binding, pluginOptions) {
     if (contentDisposition) {
       var fileNameMatch = contentDisposition.match(/filename="(.+)"/);
       if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1];
-    }
+    } // eslint-disable-next-line
 
-    if (options.openInNewTab) {
-      //eslint-disable-next-line
-      console.log("Open in new tab");
-      link.setAttribute("target", "_blank");
-    } else {
-      link.setAttribute("download", fileName);
-    }
 
+    console.log("OPEN ", url);
+    window.open(url, "_blank");
     document.body.appendChild(link);
-    link.click();
     link.remove();
     window.URL.revokeObjectURL(url);
   }).catch(function (e) {

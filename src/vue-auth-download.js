@@ -217,15 +217,12 @@ function eventClick(element, binding, pluginOptions) {
         const fileNameMatch = contentDisposition.match(/filename="(.+)"/)
         if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
       }
-
-      link.setAttribute("download", fileName)
-
       // eslint-disable-next-line
       console.log("OPEN ", url)
       window.open(url, "_blank")
 
       document.body.appendChild(link)
-      // link.click()
+
       link.remove()
       window.URL.revokeObjectURL(url)
     })
