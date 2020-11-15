@@ -52,6 +52,7 @@ function eventClick(element, binding, pluginOptions) {
     downloadingHtml: "",
     dotsAnimation: true,
     openInNewTab: false,
+    fileName: "",
   }
 
   // try to get the values
@@ -130,6 +131,14 @@ function eventClick(element, binding, pluginOptions) {
     typeof binding.value.openInNewTab === "boolean"
   ) {
     options.openInNewTab = binding.value.openInNewTab
+  }
+
+  if (
+    typeof binding.value === "object" &&
+    binding.value.fileName &&
+    typeof binding.value.fileName === "string"
+  ) {
+    options.fileName = binding.value.fileName
   }
 
   if (options.textMode === "text") {
@@ -211,6 +220,17 @@ function eventClick(element, binding, pluginOptions) {
     },
   })
     .then(response => {
+      let fileName = href.substring(href.lastIndexOf("/") + 1)
+      if (contentDisposition) {
+        const fileNameMatch = contentDisposition.match(/filename="(.+)"/)
+        if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
+      }
+
+      let newFileName = fileName
+      if (options.fileName) {
+        newFileName = options.fileName
+      }
+
       // Take the response and fire the download process
       const blob = new Blob([response.data], { type: response.data.type })
       const url = window.URL.createObjectURL(blob)
@@ -220,13 +240,8 @@ function eventClick(element, binding, pluginOptions) {
         response.headers,
         "Content-Disposition",
       )
-      let fileName = href.substring(href.lastIndexOf("/") + 1)
-      if (contentDisposition) {
-        const fileNameMatch = contentDisposition.match(/filename="(.+)"/)
-        if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1]
-      }
 
-      link.setAttribute("download", fileName)
+      link.setAttribute("download", newFileName)
 
       document.body.appendChild(link)
 
