@@ -8227,7 +8227,8 @@ function eventClick(element, binding, pluginOptions) {
     downloadingText: "Downloading",
     downloadingHtml: "",
     dotsAnimation: true,
-    openInNewTab: false
+    openInNewTab: false,
+    fileName: ""
   }; // try to get the values
   // TOKEN:
 
@@ -8277,6 +8278,10 @@ function eventClick(element, binding, pluginOptions) {
 
   if (_typeof(binding.value) === "object" && binding.value.openInNewTab && typeof binding.value.openInNewTab === "boolean") {
     options.openInNewTab = binding.value.openInNewTab;
+  }
+
+  if (_typeof(binding.value) === "object" && binding.value.fileName && typeof binding.value.fileName === "string") {
+    options.fileName = binding.value.fileName;
   }
 
   if (options.textMode === "text") {
@@ -8337,14 +8342,6 @@ function eventClick(element, binding, pluginOptions) {
     responseType: "blob",
     headers: _objectSpread2(_objectSpread2({}, authHeader), options.aditionalHeaders)
   }).then(function (response) {
-    // Take the response and fire the download process
-    var blob = new Blob([response.data], {
-      type: response.data.type
-    });
-    var url = window.URL.createObjectURL(blob);
-    var link = document.createElement("a");
-    link.href = url;
-    var contentDisposition = getParameterCaseInsensitive(response.headers, "Content-Disposition");
     var fileName = href.substring(href.lastIndexOf("/") + 1);
 
     if (contentDisposition) {
@@ -8352,7 +8349,21 @@ function eventClick(element, binding, pluginOptions) {
       if (fileNameMatch != null && fileNameMatch.length === 2) fileName = fileNameMatch[1];
     }
 
-    link.setAttribute("download", fileName);
+    var newFileName = fileName;
+
+    if (options.fileName) {
+      newFileName = options.fileName;
+    } // Take the response and fire the download process
+
+
+    var blob = new Blob([response.data], {
+      type: response.data.type
+    });
+    var url = window.URL.createObjectURL(blob);
+    var link = document.createElement("a");
+    link.href = url;
+    var contentDisposition = getParameterCaseInsensitive(response.headers, "Content-Disposition");
+    link.setAttribute("download", newFileName);
     document.body.appendChild(link);
 
     if (options.openInNewTab) {
